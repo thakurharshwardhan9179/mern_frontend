@@ -1,66 +1,71 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../../api/axios";
 import "./auth.css";
 
 const Signup = () => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "member"
-  });
-
-  const changeHandler = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("Signup data:", form); // 👈 DEBUG
 
     try {
-      await API.post("/auth/signup", form);
-      alert("Signup successful");
+      await API.post("/auth/signup", {
+        name,
+        email,
+        password,
+      });
+
+      alert("Signup successful! Please login.");
+      navigate("/login");
     } catch (err) {
       alert(err.response?.data?.message || "Signup failed");
     }
   };
 
   return (
-    <div className="auth-container">
-      <h2>Signup</h2>
+    <div className="auth-wrapper">
+      <div className="auth-container">
+        <h2>Join The Gym 🔥</h2>
+        <p className="auth-subtitle">
+          Create your account & start your fitness journey
+        </p>
 
-      <form onSubmit={submitHandler}>
-        <input
-          name="name"
-          placeholder="Name"
-          onChange={changeHandler}
-          required
-        />
+        <form onSubmit={submitHandler}>
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
-        <input
-          name="email"
-          placeholder="Email"
-          onChange={changeHandler}
-          required
-        />
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={changeHandler}
-          required
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-        {/* 👇 THIS IS THE KEY FIX */}
-        <select name="role" onChange={changeHandler}>
-          <option value="member">Member</option>
-          <option value="admin">Admin</option>
-        </select>
+          <button type="submit">Create Account</button>
+        </form>
 
-        <button type="submit">Signup</button>
-      </form>
+        <p className="auth-footer">
+          Already a member? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
   );
 };

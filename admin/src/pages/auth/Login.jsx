@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../../api/axios";
 import "./auth.css";
 
@@ -17,14 +17,17 @@ const Login = () => {
         password,
       });
 
-      // ✅ REQUIRED FOR PROTECTED ROUTES
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.user.role);
+      // ✅ FIX: token ko user object ke andar save kar rahe hain
+      const userData = {
+        id: res.data.user.id,
+        name: res.data.user.name,
+        role: res.data.user.role,
+        token: res.data.token,
+      };
 
-      // 🔥🔥 YE LINE MISS THI (MAIN FIX)
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("user", JSON.stringify(userData));
 
-      if (res.data.user.role === "admin") {
+      if (userData.role === "admin") {
         navigate("/admin");
       } else {
         navigate("/member/announcements");
@@ -35,28 +38,37 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Login</h2>
+    <div className="auth-wrapper">
+      <div className="auth-container">
+        <h2>Welcome Back 💪</h2>
+        <p className="auth-subtitle">
+          Login to continue your fitness journey
+        </p>
 
-      <form onSubmit={submitHandler}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <form onSubmit={submitHandler}>
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-        <button type="submit">Login</button>
-      </form>
+          <button type="submit">Login</button>
+        </form>
+
+        <p className="auth-footer">
+          Don’t have an account? <Link to="/signup">Signup</Link>
+        </p>
+      </div>
     </div>
   );
 };

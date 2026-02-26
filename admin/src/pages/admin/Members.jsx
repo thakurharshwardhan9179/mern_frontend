@@ -5,10 +5,11 @@ const Members = () => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // 🔍 search & filter state
+  // search & filter
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all"); // all | active | expired
 
+  // ================= FETCH MEMBERS =================
   const fetchMembers = async () => {
     try {
       setLoading(true);
@@ -27,29 +28,27 @@ const Members = () => {
 
   // ================= DELETE =================
   const deleteMember = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this member?")) return;
+    if (!window.confirm("Delete this member?")) return;
 
     try {
       await API.delete(`/member/${id}`);
-      alert("Member deleted");
       fetchMembers();
-    } catch (err) {
+    } catch {
       alert("Delete failed");
     }
   };
 
   // ================= RENEW =================
   const renewMember = async (id) => {
-    const plan = prompt("Enter Plan (1 Month / 3 Month / 6 Month)");
-    const fees = prompt("Enter Fees");
+    const plan = prompt("Enter plan (1 Month / 3 Month / 6 Month)");
+    const fees = prompt("Enter fees");
 
-    if (!plan || !fees) return alert("Plan & fees required");
+    if (!plan || !fees) return;
 
     try {
       await API.put(`/member/renew/${id}`, { plan, fees });
-      alert("Plan renewed");
       fetchMembers();
-    } catch (err) {
+    } catch {
       alert("Renew failed");
     }
   };
@@ -58,37 +57,35 @@ const Members = () => {
   const filteredMembers = members.filter((m) => {
     const expired = new Date(m.expiryDate) < new Date();
 
-    // status filter
     if (filter === "active" && expired) return false;
     if (filter === "expired" && !expired) return false;
 
-    // search filter
     const text = search.toLowerCase();
-    const name = m.userId?.name?.toLowerCase() || "";
-    const email = m.userId?.email?.toLowerCase() || "";
-
-    return name.includes(text) || email.includes(text);
+    return (
+      m.userId?.name?.toLowerCase().includes(text) ||
+      m.userId?.email?.toLowerCase().includes(text)
+    );
   });
 
   return (
     <div style={{ padding: 20 }}>
-      <h2>All Members</h2>
+      <h2>Members</h2>
 
-      {/* 🔍 SEARCH + FILTER */}
-      <div style={{ marginBottom: 15 }}>
+      {/* SEARCH + FILTER */}
+      <div style={toolbar}>
         <input
-          placeholder="Search by name or email"
+          placeholder="Search member"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ padding: 8, width: 250, marginRight: 10 }}
+          style={searchInput}
         />
 
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          style={{ padding: 8 }}
+          style={select}
         >
-          <option value="all">All</option>
+          <option value="all">All Members</option>
           <option value="active">Active</option>
           <option value="expired">Expired</option>
         </select>
@@ -97,60 +94,142 @@ const Members = () => {
       {loading && <p>Loading...</p>}
 
       {!loading && filteredMembers.length === 0 && (
-        <p>No members found</p>
+        <div style={emptyBox}>
+          <h3>No Members Found</h3>
+          <p>You can add a new member</p>
+        </div>
       )}
 
-      {!loading && filteredMembers.length > 0 && (
-        <table border="1" cellPadding="10" width="100%">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Plan</th>
-              <th>Expiry</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+      {/* MEMBERS GRID */}
+      <div style={grid}>
+        {filteredMembers.map((m) => {
+          const expired = new Date(m.expiryDate) < new Date();
 
-          <tbody>
-            {filteredMembers.map((m) => {
-              const expired = new Date(m.expiryDate) < new Date();
+          return (
+            <div key={m._id} style={card}>
+              <td>
+  <a href={`/admin/member/${m._id}`}>
+    {m.userId?.name || "N/A"}
+  </a>
+</td>
+              <p>Email: {m.userId?.email}</p>
+              <p>Phone: {m.phone}</p>
+              <p>Plan: {m.plan}</p>
+              <p>
+                Expiry:{" "}
+                {new Date(m.expiryDate).toLocaleDateString()}
+              </p>
+              <p
+                style={{
+                  color: expired ? "#dc2626" : "#16a34a",
+                  fontWeight: "bold",
+                }}
+              >
+                {expired ? "Expired" : "Active"}
+              </p>
 
-              return (
-                <tr
-                  key={m._id}
-                  style={{ color: expired ? "red" : "green" }}
+              <div style={btnRow}>
+                <button
+                  style={renewBtn}
+                  onClick={() => renewMember(m._id)}
                 >
-                  <td>{m.userId?.name || "N/A"}</td>
-                  <td>{m.userId?.email || "N/A"}</td>
-                  <td>{m.phone}</td>
-                  <td>{m.plan}</td>
-                  <td>
-                    {new Date(m.expiryDate).toLocaleDateString()}
-                  </td>
-                  <td>{expired ? "Expired" : "Active"}</td>
-                  <td>
-                    <button onClick={() => renewMember(m._id)}>
-                      Renew
-                    </button>
-                    &nbsp;
-                    <button
-                      onClick={() => deleteMember(m._id)}
-                      style={{ color: "red" }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
+                  Renew
+                </button>
+
+                <button
+                  style={deleteBtn}
+                  onClick={() => deleteMember(m._id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* FLOATING ADD BUTTON */}
+      <button
+        style={floatingBtn}
+        onClick={() => alert("Add Member Page")}
+      >
+        + Add Member
+      </button>
     </div>
   );
+};
+
+/* ================= STYLES ================= */
+
+const toolbar = {
+  display: "flex",
+  gap: 10,
+  marginBottom: 20,
+};
+
+const searchInput = {
+  padding: 10,
+  width: 250,
+};
+
+const select = {
+  padding: 10,
+};
+
+const grid = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+  gap: 20,
+};
+
+const card = {
+  padding: 15,
+  borderRadius: 12,
+  background: "#f8fafc",
+  boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
+};
+
+const btnRow = {
+  marginTop: 10,
+  display: "flex",
+  gap: 10,
+};
+
+const renewBtn = {
+  padding: "6px 12px",
+  background: "#2563eb",
+  color: "#fff",
+  border: "none",
+  borderRadius: 6,
+  cursor: "pointer",
+};
+
+const deleteBtn = {
+  padding: "6px 12px",
+  background: "#dc2626",
+  color: "#fff",
+  border: "none",
+  borderRadius: 6,
+  cursor: "pointer",
+};
+
+const emptyBox = {
+  marginTop: 50,
+  textAlign: "center",
+  color: "#555",
+};
+
+const floatingBtn = {
+  position: "fixed",
+  bottom: 30,
+  right: 30,
+  padding: "14px 20px",
+  borderRadius: "50px",
+  background: "#0f766e",
+  color: "#fff",
+  border: "none",
+  fontSize: 16,
+  cursor: "pointer",
 };
 
 export default Members;

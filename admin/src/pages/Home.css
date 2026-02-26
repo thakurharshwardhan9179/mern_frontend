@@ -1,0 +1,126 @@
+.home {
+    width: 100%;
+    min-height: 100vh;
+    background: #000;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 90vh;
+    background-image: url("../assets/gym.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom right,
+      rgba(0, 0, 0, 0.85),
+      rgba(0, 0, 0, 0.6)
+    );
+  }
+  
+  .hero-content {
+    position: relative;
+    text-align: center;
+    max-width: 800px;
+    padding: 20px;
+    z-index: 2;
+  }
+  
+  .hero-content h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+  }
+  
+  .hero-content h1 span {
+    color: #22c55e;
+  }
+  
+  .hero-content p {
+    margin: 20px 0;
+    font-size: 1.1rem;
+    color: #d1d5db;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .btn {
+    padding: 14px 36px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+  
+  .btn.primary {
+    background: #22c55e;
+    color: #000;
+  }
+  
+  .btn.primary:hover {
+    background: #16a34a;
+  }
+  
+  .btn.secondary {
+    border: 2px solid #22c55e;
+    color: #22c55e;
+  }
+  
+  .btn.secondary:hover {
+    background: #22c55e;
+    color: #000;
+  }
+  
+  /* FEATURES */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 60px 10%;
+    background: #020617;
+  }
+  
+  .feature-card {
+    background: #020617;
+    border: 1px solid #1f2933;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+  
+  .feature-card h3 {
+    margin: 15px 0 10px;
+    color: #22c55e;
+  }
+  
+  .feature-card p {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+  }
+  
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: 2.2rem;
+    }
+  
+    .hero-buttons {
+      flex-direction: column;
+    }
+  }

@@ -6,47 +6,40 @@ const Announcements = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchAnnouncements = async () => {
-      try {
-        setLoading(true);
-        const res = await API.get("/announcement");
-        setList(res.data);
-      } catch (err) {
-        alert("Failed to load announcements");
-      } finally {
-        setLoading(false);
-      }
+    const load = async () => {
+      setLoading(true);
+      const res = await API.get("/announcement");
+      setList(res.data);
+      setLoading(false);
     };
-
-    fetchAnnouncements();
+    load();
   }, []);
 
   return (
-    <div style={{ marginTop: 30 }}>
+    <div className="box">
       <h3>📢 Announcements</h3>
 
       {loading && <p>Loading...</p>}
 
       {!loading && list.length === 0 && (
-        <p>No announcements yet</p>
+        <p>No announcements</p>
       )}
 
-      {!loading &&
-        list.map((a) => (
-          <div
-            key={a._id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: 6,
-              padding: 10,
-              marginBottom: 10,
-              background: "#f9f9f9"
-            }}
-          >
-            <h4>{a.title}</h4>
-            <p>{a.message}</p>
-          </div>
-        ))}
+      {list.map(a => (
+        <div
+          key={a._id}
+          style={{
+            background: "#f8fafc",
+            padding: 12,
+            borderRadius: 8,
+            marginTop: 10,
+            borderLeft: "4px solid #2563eb"
+          }}
+        >
+          <b>{a.title}</b>
+          <p style={{ marginTop: 4 }}>{a.message}</p>
+        </div>
+      ))}
     </div>
   );
 };

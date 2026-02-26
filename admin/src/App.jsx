@@ -1,8 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
+import PublicNavbar from "./components/PublicNavbar";
 
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
+import Home from "./pages/Home";
 
 import Dashboard from "./pages/admin/Dashboard";
 import AddMember from "./pages/admin/AddMember";
@@ -12,19 +15,27 @@ import Announcement from "./pages/admin/Announcement";
 import Announcements from "./pages/member/Announcements";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import MemberDashboard from "./pages/member/Dashboard";
+import MemberProfile from "./pages/admin/MemberProfile";
 
+const Layout = () => {
+  const location = useLocation();
 
-function App() {
+  const isPublic =
+    location.pathname === "/" ||
+    location.pathname === "/login" ||
+    location.pathname === "/signup";
+
   return (
-    <BrowserRouter>
-      <Navbar />
+    <>
+      {isPublic ? <PublicNavbar /> : <Navbar />}
 
       <Routes>
-        {/* PUBLIC */}
+        {/* PUBLIC ROUTES */}
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* ADMIN */}
+        {/* ADMIN ROUTES */}
         <Route
           path="/admin"
           element={
@@ -33,7 +44,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/add-member"
           element={
@@ -42,16 +52,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/members"
           element={
             <ProtectedRoute role="admin">
-              <Members/>
+              <Members />
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/announcement"
           element={
@@ -60,26 +68,41 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        {/* MEMBER */}
         <Route
-          path="/member/announcements"
+          path="/admin/member/:id"
           element={
-            <ProtectedRoute>
-              <Announcements />
+            <ProtectedRoute role="admin">
+              <MemberProfile />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* MEMBER ROUTES */}
+        <Route
+          path="/member/dashboard"
+          element={
+            <ProtectedRoute role="member">
+              <MemberDashboard />
             </ProtectedRoute>
           }
         />
         <Route
-  path="/member/dashboard"
-  element={
-    <ProtectedRoute role="member">
-      <MemberDashboard />
-    </ProtectedRoute>
-  }
-/>
-
+          path="/member/announcements"
+          element={
+            <ProtectedRoute role="member">
+              <Announcements />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
+    </>
+  );
+};
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Layout />
     </BrowserRouter>
   );
 }

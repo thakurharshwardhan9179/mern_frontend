@@ -56,7 +56,7 @@ const MemberProfile = () => {
   return (
     <div style={page}>
       <div style={card}>
-        <h2>👤 Member Profile</h2>
+        <h2 style={{ marginBottom: 10 }}>👤 Member Profile</h2>
 
         <div style={badge(statusColor)}>{status}</div>
 
@@ -70,15 +70,16 @@ const MemberProfile = () => {
           </p>
           <p>
             <b>Days Left:</b>{" "}
-            <span style={{ color: statusColor }}>
+            <span style={{ color: statusColor, fontWeight: 600 }}>
               {daysLeft <= 0 ? 0 : daysLeft}
             </span>
           </p>
         </div>
 
-        {/* PROGRESS BAR */}
         <div>
-          <p style={{ marginBottom: 6 }}>Membership Progress</p>
+          <p style={{ marginBottom: 6, fontWeight: 500 }}>
+            Membership Progress
+          </p>
           <div style={progressWrap}>
             <div
               style={{
@@ -94,21 +95,25 @@ const MemberProfile = () => {
   );
 };
 
-/* ============ STYLES ============ */
+/* ============ UPDATED STYLES ============ */
+
 const page = {
   minHeight: "100vh",
-  background: "#f1f5f9",
+  background: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  padding: 20, // 🔥 mobile spacing
 };
 
 const card = {
-  width: "420px",
-  background: "#fff",
+  width: "100%",            // 🔥 responsive
+  maxWidth: "420px",        // desktop limit
+  background: "#ffffff",
   padding: 25,
   borderRadius: 16,
-  boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+  boxShadow: "0 15px 35px rgba(0,0,0,0.25)",
+  color: "#1f2937",         // 🔥 strong readable text
 };
 
 const badge = (bg) => ({
@@ -120,11 +125,14 @@ const badge = (bg) => ({
   background: bg,
   color: "#fff",
   fontWeight: 600,
+  fontSize: 14,
 });
 
 const info = {
   marginBottom: 20,
   lineHeight: 1.8,
+  fontSize: 14,
+  color: "#374151",
 };
 
 const progressWrap = {

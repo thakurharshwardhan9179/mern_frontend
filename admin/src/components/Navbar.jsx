@@ -15,47 +15,49 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/login");
+    setMenuOpen(false);
   };
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="nav-left">
-          <h2>Gym Management</h2>
-        </div>
+    <nav className="navbar">
+      <div className="nav-left">
+        <h2>Gym Management</h2>
+      </div>
 
-        <div className="nav-right">
-          {!user && (
-            <>
-              <Link to="/login">Login</Link>
-              <Link to="/signup" className="signup-btn">
-                Signup
-              </Link>
-            </>
-          )}
+      {/* Hamburger */}
+      <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </div>
 
-          {/* ADMIN LINKS */}
-          {user?.role === "admin" && (
-            <>
-              <Link to="/admin">Dashboard</Link>
-              <Link to="/admin/add-member">Add Member</Link>
-              <Link to="/admin/members">Members</Link>
-              <Link to="/admin/announcement">Announcement</Link>
-              <button onClick={handleLogout}>Logout</button>
-            </>
-          )}
+      <div className={`nav-right ${menuOpen ? "active" : ""}`}>
+        {!user && (
+          <>
+            <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
+            <Link to="/signup" className="signup-btn" onClick={() => setMenuOpen(false)}>
+              Signup
+            </Link>
+          </>
+        )}
 
-          {/* MEMBER LINKS */}
-          {user?.role === "member" && (
-            <>
-              <Link to="/member/dashboard">Dashboard</Link>
-              <Link to="/member/announcements">Announcements</Link>
-              <button onClick={handleLogout}>Logout</button>
-            </>
-          )}
-        </div>
-      </nav>
-    </>
+        {user?.role === "admin" && (
+          <>
+            <Link to="/admin" onClick={() => setMenuOpen(false)}>Dashboard</Link>
+            <Link to="/admin/add-member" onClick={() => setMenuOpen(false)}>Add Member</Link>
+            <Link to="/admin/members" onClick={() => setMenuOpen(false)}>Members</Link>
+            <Link to="/admin/announcement" onClick={() => setMenuOpen(false)}>Announcement</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        )}
+
+        {user?.role === "member" && (
+          <>
+            <Link to="/member/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>
+            <Link to="/member/announcements" onClick={() => setMenuOpen(false)}>Announcements</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        )}
+      </div>
+    </nav>
   );
 };
 

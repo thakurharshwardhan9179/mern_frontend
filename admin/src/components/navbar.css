@@ -71,7 +71,8 @@
   .nav-right {
     position: absolute;
     top: 70px;
-    right: 0;
+    right: 10px;        /* change */
+    width: 200px;    
     background: #1f2937;
     flex-direction: column;
     width: 100%;

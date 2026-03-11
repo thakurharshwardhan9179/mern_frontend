@@ -185,3 +185,123 @@
   padding: 40px;
   font-size: 18px;
 }
+.fitness-card{
+  background:#fff;
+  padding:20px;
+  border-radius:14px;
+  margin-top:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  }
+  
+  .fitness-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
+  margin-top:15px;
+  }
+  
+  .fitness-grid div{
+  background:#f5f7fb;
+  padding:10px;
+  border-radius:8px;
+  text-align:center;
+  }
+  
+  .fitness-grid p{
+  font-size:13px;
+  color:#64748b;
+  margin-bottom:4px;
+  }
+  
+  .fitness-grid span{
+  font-size:16px;
+  font-weight:600;
+  }
+  
+  .ai-box{
+  margin-top:15px;
+  background:#f8fafc;
+  padding:12px;
+  border-radius:10px;
+  }
+  
+  .ai-box h4{
+  margin-bottom:5px;
+  color:#0f172a;
+  }
+  /* FITNESS SECTION */
+
+.fitness-section{
+  margin-top:40px;
+  padding:25px;
+  background:#0b1a33;
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+  }
+  
+  .section-title{
+  color:white;
+  margin-bottom:20px;
+  font-size:20px;
+  font-weight:600;
+  }
+  
+  .fitness-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:15px;
+  margin-bottom:25px;
+  }
+  
+  .fitness-card{
+  background:#12264a;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  transition:0.3s;
+  }
+  
+  .fitness-card:hover{
+  transform:translateY(-3px);
+  background:#173768;
+  }
+  
+  .fitness-card span{
+  font-size:13px;
+  color:#9bb4d1;
+  }
+  
+  .fitness-card h3{
+  color:white;
+  margin-top:5px;
+  font-size:18px;
+  }
+  
+  /* SUGGESTION CARDS */
+  
+  .suggestion-card{
+  background:#12264a;
+  padding:20px;
+  border-radius:10px;
+  margin-bottom:15px;
+  }
+  
+  .suggestion-card h4{
+  color:#4da3ff;
+  margin-bottom:8px;
+  }
+  
+  .suggestion-card p{
+  color:#cfd8e3;
+  font-size:14px;
+  line-height:1.5;
+  }
+  .renew-btn{
+    padding:10px 20px;
+    background:#ff4d4d;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+    }

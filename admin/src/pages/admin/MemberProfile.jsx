@@ -69,11 +69,14 @@ const MemberProfile = () => {
             <b>Expiry:</b> {expiry.toLocaleDateString()}
           </p>
           <p>
-            <b>Days Left:</b>{" "}
-            <span style={{ color: statusColor, fontWeight: 600 }}>
-              {daysLeft <= 0 ? 0 : daysLeft}
-            </span>
-          </p>
+<b>Days Left:</b>
+<span style={{ color: statusColor, fontWeight: 600 }}>
+{daysLeft <= 0 ? 0 : daysLeft}
+</span>
+</p>
+
+<p><b>BMI:</b> {member.bmi || "Not Available"}</p>
+<p><b>Workout Suggestion:</b> {member.workoutSuggestion || "Not Available"}</p>
         </div>
 
         <div>

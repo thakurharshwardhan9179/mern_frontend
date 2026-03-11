@@ -10,12 +10,16 @@ const AddMember = () => {
     phone: "",
     plan: "1 Month",
     fees: "",
+    age: "",
+    height: "",
+    weight: "",
+    goal: "Fitness",
   });
 
   // ================= GET USERS =================
   const fetchUsers = async () => {
     try {
-      const res = await API.get("/auth/all"); // ✅ correct
+      const res = await API.get("/auth/all");
       setUsers(res.data);
     } catch (err) {
       alert("Failed to load users");
@@ -42,12 +46,16 @@ const AddMember = () => {
     try {
       setLoading(true);
 
-      await API.post("/member/add", {
-        userId: form.userId,
-        phone: form.phone,
-        plan: form.plan,
-        fees: form.fees,
-      });
+      // ⭐ IMPORTANT FIX
+      const payload = {
+        ...form,
+        age: form.age ? Number(form.age) : undefined,
+        height: form.height ? Number(form.height) : undefined,
+        weight: form.weight ? Number(form.weight) : undefined,
+        fees: Number(form.fees),
+      };
+
+      await API.post("/member/add", payload);
 
       alert("✅ Member Added Successfully");
 
@@ -56,7 +64,12 @@ const AddMember = () => {
         phone: "",
         plan: "1 Month",
         fees: "",
+        age: "",
+        height: "",
+        weight: "",
+        goal: "Fitness",
       });
+
     } catch (err) {
       alert(err.response?.data?.message || "Failed to add member");
     } finally {
@@ -70,7 +83,6 @@ const AddMember = () => {
         <h2 style={heading}>Add New Member</h2>
 
         <form onSubmit={handleSubmit}>
-          {/* USER */}
           <div style={field}>
             <label style={label}>Select User</label>
             <select
@@ -89,7 +101,6 @@ const AddMember = () => {
             </select>
           </div>
 
-          {/* PHONE */}
           <div style={field}>
             <label style={label}>Phone</label>
             <input
@@ -102,7 +113,6 @@ const AddMember = () => {
             />
           </div>
 
-          {/* PLAN */}
           <div style={field}>
             <label style={label}>Plan</label>
             <select
@@ -117,7 +127,6 @@ const AddMember = () => {
             </select>
           </div>
 
-          {/* FEES */}
           <div style={field}>
             <label style={label}>Fees (₹)</label>
             <input
@@ -130,7 +139,54 @@ const AddMember = () => {
               style={input}
             />
           </div>
-          console.log(form);
+
+          <div style={field}>
+            <label style={label}>Age</label>
+            <input
+              type="number"
+              name="age"
+              value={form.age}
+              onChange={handleChange}
+              style={input}
+            />
+          </div>
+
+          <div style={field}>
+            <label style={label}>Height (cm)</label>
+            <input
+              type="number"
+              name="height"
+              value={form.height}
+              onChange={handleChange}
+              style={input}
+            />
+          </div>
+
+          <div style={field}>
+            <label style={label}>Weight (kg)</label>
+            <input
+              type="number"
+              name="weight"
+              value={form.weight}
+              onChange={handleChange}
+              style={input}
+            />
+          </div>
+
+          <div style={field}>
+            <label style={label}>Fitness Goal</label>
+            <select
+              name="goal"
+              value={form.goal}
+              onChange={handleChange}
+              style={input}
+            >
+              <option>Weight Loss</option>
+              <option>Muscle Gain</option>
+              <option>Fitness</option>
+            </select>
+          </div>
+
           <button style={button} disabled={loading}>
             {loading ? "Adding..." : "+ Add Member"}
           </button>
@@ -140,7 +196,7 @@ const AddMember = () => {
   );
 };
 
-/* ================= INLINE STYLES ================= */
+/* ================= STYLES ================= */
 
 const page = {
   minHeight: "100vh",
@@ -192,7 +248,7 @@ const button = {
   width: "100%",
   marginTop: "12px",
   padding: "13px",
-  background: "#0f766e", // same vibe as members page
+  background: "#0f766e",
   color: "#fff",
   border: "none",
   borderRadius: "12px",

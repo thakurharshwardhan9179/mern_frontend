@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import API from "../../api/axios";
 
 const Members = () => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // search & filter
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("all"); // all | active | expired
+  const [filter, setFilter] = useState("all");
 
-  // ================= FETCH MEMBERS =================
   const fetchMembers = async () => {
     try {
       setLoading(true);
       const res = await API.get("/member");
       setMembers(res.data);
-    } catch (err) {
+    } catch {
       alert("Failed to load members");
     } finally {
       setLoading(false);
@@ -26,7 +25,6 @@ const Members = () => {
     fetchMembers();
   }, []);
 
-  // ================= DELETE =================
   const deleteMember = async (id) => {
     if (!window.confirm("Delete this member?")) return;
 
@@ -38,7 +36,6 @@ const Members = () => {
     }
   };
 
-  // ================= RENEW =================
   const renewMember = async (id) => {
     const plan = prompt("Enter plan (1 Month / 3 Month / 6 Month)");
     const fees = prompt("Enter fees");
@@ -53,7 +50,6 @@ const Members = () => {
     }
   };
 
-  // ================= FILTER LOGIC =================
   const filteredMembers = members.filter((m) => {
     const expired = new Date(m.expiryDate) < new Date();
 
@@ -71,7 +67,6 @@ const Members = () => {
     <div style={{ padding: 20 }}>
       <h2>Members</h2>
 
-      {/* SEARCH + FILTER */}
       <div style={toolbar}>
         <input
           placeholder="Search member"
@@ -96,29 +91,31 @@ const Members = () => {
       {!loading && filteredMembers.length === 0 && (
         <div style={emptyBox}>
           <h3>No Members Found</h3>
-          <p>You can add a new member</p>
         </div>
       )}
 
-      {/* MEMBERS GRID */}
       <div style={grid}>
         {filteredMembers.map((m) => {
           const expired = new Date(m.expiryDate) < new Date();
 
           return (
             <div key={m._id} style={card}>
-              <td>
-  <a href={`/admin/member/${m._id}`}>
-    {m.userId?.name || "N/A"}
-  </a>
-</td>
+              
+              {/* CLICKABLE NAME */}
+              <h3>
+                <Link to={`/admin/member/${m._id}`}>
+                  {m.userId?.name || "N/A"}
+                </Link>
+              </h3>
+
               <p>Email: {m.userId?.email}</p>
               <p>Phone: {m.phone}</p>
               <p>Plan: {m.plan}</p>
+
               <p>
-                Expiry:{" "}
-                {new Date(m.expiryDate).toLocaleDateString()}
+                Expiry: {new Date(m.expiryDate).toLocaleDateString()}
               </p>
+
               <p
                 style={{
                   color: expired ? "#dc2626" : "#16a34a",
@@ -148,10 +145,9 @@ const Members = () => {
         })}
       </div>
 
-      {/* FLOATING ADD BUTTON */}
       <button
         style={floatingBtn}
-        onClick={() => alert("Add Member Page")}
+        onClick={() => window.location.href="/admin/add-member"}
       >
         + Add Member
       </button>
@@ -159,7 +155,7 @@ const Members = () => {
   );
 };
 
-/* ================= STYLES ================= */
+/* styles */
 
 const toolbar = {
   display: "flex",
@@ -216,7 +212,6 @@ const deleteBtn = {
 const emptyBox = {
   marginTop: 50,
   textAlign: "center",
-  color: "#555",
 };
 
 const floatingBtn = {

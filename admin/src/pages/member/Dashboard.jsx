@@ -5,79 +5,75 @@ import Attendance from "./Attendance";
 import "./Dashboard.css";
 
 const Dashboard = () => {
+
 const [member, setMember] = useState(null);
 const [loading, setLoading] = useState(true);
 
 useEffect(() => {
+
 const fetchMyData = async () => {
+
 try {
+
 const res = await API.get("/member/my");
-console.log("Member Data:", res.data);   // DEBUG
+
+console.log("Member Data:", res.data);
+
 setMember(res.data);
+
 } catch (err) {
+
 console.log(err);
 alert("Failed to load dashboard");
+
 } finally {
+
 setLoading(false);
+
 }
+
 };
+
 fetchMyData();
+
 }, []);
 
-// ================= PAYMENT FUNCTION =================
+
+// ================= SIMPLE PAYMENT FUNCTION =================
+
 const handlePayment = async () => {
+
 try {
 
-  const amount = member?.fees || 500;   // fallback amount
+const amount = member?.fees || 500;
 
-  console.log("Payment Amount:", amount);
+const confirmPay = window.confirm(`Pay ₹${amount} to renew your membership?`);
 
-  const res = await API.post("/payment/create-order", {
-    amount: amount,
-  });
+if (!confirmPay) return;
 
-  const order = res.data;
+await API.post("/payment/verify", {
 
-  const options = {
-    key: import.meta.env.VITE_RAZORPAY_KEY,
-    amount: order.amount,
-    currency: "INR",
-    name: "Gym Membership",
-    description: "Renew Membership",
-    order_id: order.id,
+userId: member.userId._id,
+phone: member.phone,
+plan: member.plan,
+fees: amount,
 
-    handler: async function (response) {
+});
 
-      console.log("Payment Response:", response);
+alert("Membership Renewed Successfully 💪");
 
-      await API.post("/payment/verify", {
-        paymentId: response.razorpay_payment_id,
-        orderId: response.razorpay_order_id,
-        userId: member.userId._id,
-        phone: member.phone,
-        plan: member.plan,
-        fees: amount,
-      });
-
-      alert("Membership Renewed Successfully 💪");
-      window.location.reload();
-    },
-
-    theme: {
-      color: "#ff4d4d",
-    },
-  };
-
-  const rzp = new window.Razorpay(options);
-  rzp.open();
+window.location.reload();
 
 } catch (error) {
-  console.log("Payment Error:", error);
-  alert("Payment failed");
+
+console.log("Payment Error:", error);
+
+alert("Payment failed");
+
 }
 
-
 };
+
 
 if (loading) return <p className="loading">Loading dashboard...</p>;
 if (!member) return <p className="loading">No membership found</p>;
@@ -95,87 +91,135 @@ let status = "active";
 let statusText = "Active";
 
 if (daysLeft <= 0) {
+
 status = "expired";
 statusText = "Expired";
+
 } else if (daysLeft <= 7) {
+
 status = "warning";
 statusText = "Expiring Soon";
+
 }
 
-return ( <div className="dashboard">
+return (
 
-```
-  <div className="hero">
-    <div className="hero-glow"></div>
+<div className="dashboard">
 
-    <div className="hero-content">
-      <h1>
-        Welcome Back, <span>{member.userId?.name}</span> 👋
-      </h1>
+<div className="hero">
 
-      <p className="hero-sub">
-        Every workout makes you stronger than yesterday.
-      </p>
+<div className="hero-glow"></div>
 
-      <div className="hero-badge">
-        💪 Train Hard. Stay Strong. No Excuses.
-      </div>
-    </div>
-  </div>
+<div className="hero-content">
 
-  {daysLeft <= 7 && (
-    <div className={`alert ${status}`}>
-      {daysLeft <= 0
-        ? "❌ Your membership has expired. Please renew."
-        : `⏰ Your membership will expire in ${daysLeft} days`}
+<h1>
 
-      <br /><br />
+Welcome Back, <span>{member.userId?.name}</span> 👋
 
-      <button className="renew-btn" onClick={handlePayment}>
-        Renew Membership 💳
-      </button>
-    </div>
-  )}
+</h1>
 
-  <div className="stats">
-    <div className="stat-card">
-      <h4>Plan</h4>
-      <p>{member.plan}</p>
-    </div>
+<p className="hero-sub">
 
-    <div className="stat-card">
-      <h4>Days Left</h4>
-      <p>{daysLeft > 0 ? daysLeft : 0}</p>
-    </div>
+Every workout makes you stronger than yesterday.
 
-    <div className="stat-card">
-      <h4>Status</h4>
-      <p className={`status-text ${status}`}>{statusText}</p>
-    </div>
-  </div>
+</p>
 
-  <div className="card">
-    <p><b>Email:</b> {member.userId?.email}</p>
-    <p><b>Phone:</b> {member.phone}</p>
-    <p><b>Expiry:</b> {expiry.toLocaleDateString()}</p>
+<div className="hero-badge">
 
-    <div className="progress-bar">
-      <div
-        className={`progress-fill ${status}`}
-        style={{ width: `${progress}%` }}
-      />
-    </div>
-  </div>
+💪 Train Hard. Stay Strong. No Excuses.
 
-  <div className="grid">
-    <Announcements />
-    <Attendance />
-  </div>
+</div>
+
+</div>
 
 </div>
 
 
+{daysLeft <= 7 && (
+
+<div className={`alert ${status}`}>
+
+{daysLeft <= 0
+? "❌ Your membership has expired. Please renew."
+: `⏰ Your membership will expire in ${daysLeft} days`}
+
+<br /><br />
+
+<button className="renew-btn" onClick={handlePayment}>
+
+Renew Membership 💳
+
+</button>
+
+</div>
+
+)}
+
+
+<div className="stats">
+
+<div className="stat-card">
+
+<h4>Plan</h4>
+
+<p>{member.plan}</p>
+
+</div>
+
+<div className="stat-card">
+
+<h4>Days Left</h4>
+
+<p>{daysLeft > 0 ? daysLeft : 0}</p>
+
+</div>
+
+<div className="stat-card">
+
+<h4>Status</h4>
+
+<p className={`status-text ${status}`}>{statusText}</p>
+
+</div>
+
+</div>
+
+
+<div className="card">
+
+<p><b>Email:</b> {member.userId?.email}</p>
+
+<p><b>Phone:</b> {member.phone}</p>
+
+<p><b>Expiry:</b> {expiry.toLocaleDateString()}</p>
+
+<div className="progress-bar">
+
+<div
+
+className={`progress-fill ${status}`}
+
+style={{ width: `${progress}%` }}
+
+/>
+
+</div>
+
+</div>
+
+
+<div className="grid">
+
+<Announcements />
+
+<Attendance />
+
+</div>
+
+</div>
+
 );
+
 };
 
-export default Dashboard;
+export default Dashboard

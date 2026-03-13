@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-left">
-        <h2>Gym Management</h2>
+        <h2>FitZone</h2>
       </div>
 
       {/* Hamburger */}

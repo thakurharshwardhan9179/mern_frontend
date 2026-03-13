@@ -1,126 +1,467 @@
-.home {
-    width: 100%;
-    min-height: 100vh;
-    background: #000;
-    color: #fff;
-    font-family: "Poppins", sans-serif;
+.home{
+  width:100%;
+  min-height:100vh;
+  background:#000;
+  color:white;
+  font-family:"Poppins",sans-serif;
+}
+
+/* HERO */
+
+.hero{
+  height:92vh;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.hero-content{
+  max-width:800px;
+  padding:20px;
+}
+
+.hero-content h1{
+  font-size:3.5rem;
+  font-weight:800;
+}
+
+.hero-content span{
+  color:#22c55e;
+}
+
+.hero-content p{
+  margin:25px 0;
+  color:#d1d5db;
+  font-size:1.1rem;
+}
+
+/* BUTTONS */
+
+.hero-buttons{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  margin-top:30px;
+}
+
+.btn{
+  padding:14px 36px;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.btn.primary{
+  background:#22c55e;
+  color:black;
+}
+
+.btn.primary:hover{
+  background:#16a34a;
+  transform:scale(1.05);
+}
+
+.btn.secondary{
+  border:2px solid #22c55e;
+  color:#22c55e;
+}
+
+.btn.secondary:hover{
+  background:#22c55e;
+  color:black;
+}
+
+/* FEATURES */
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  padding:70px 10%;
+  background:#020617;
+}
+
+.feature-card{
+  background:#020617;
+  border:1px solid #1f2937;
+  border-radius:15px;
+  padding:35px;
+  text-align:center;
+  transition:0.3s;
+}
+
+.feature-card:hover{
+  transform:translateY(-10px);
+  border-color:#22c55e;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+
+.feature-card h3{
+  margin:15px 0;
+  color:#22c55e;
+}
+
+.feature-card p{
+  color:#cbd5e1;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero-content h1{
+  font-size:2.3rem;
+}
+
+.hero-buttons{
+  flex-direction:column;
+}
+
+}
+/* GYM GALLERY */
+
+.gallery{
+  padding:80px 10%;
+  background:#000;
+  text-align:center;
+}
+
+.gallery h2{
+  font-size:2.5rem;
+  margin-bottom:40px;
+  color:#22c55e;
+}
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.gallery-grid img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  border-radius:12px;
+  transition:0.4s;
+}
+
+.gallery-grid img:hover{
+  transform:scale(1.08);
+  box-shadow:0 10px 30px rgba(0,0,0,0.7);
+}
+/* ABOUT SECTION */
+
+.about{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:40px;
+  padding:80px 10%;
+  background:#020617;
+}
+
+.about-text{
+  flex:1;
+}
+
+.about-text h2{
+  color:#22c55e;
+  font-size:2.5rem;
+  margin-bottom:20px;
+}
+
+.about-text p{
+  color:#cbd5e1;
+  line-height:1.6;
+}
+
+.about-image{
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+
+.about-image img{
+  width:100%;
+  max-width:350px;
+  border-radius:15px;
+}
+
+/* TRAINERS */
+
+.trainers{
+  padding:80px 10%;
+  background:#000;
+  text-align:center;
+}
+
+.trainers h2{
+  font-size:2.5rem;
+  color:#22c55e;
+  margin-bottom:40px;
+}
+
+.trainer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+}
+
+.trainer-card{
+  background:#020617;
+  border:1px solid #1f2937;
+  border-radius:15px;
+  padding:25px;
+  transition:0.3s;
+}
+
+.trainer-card:hover{
+  transform:translateY(-10px);
+  border-color:#22c55e;
+}
+
+.trainer-card img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+
+.trainer-card h3{
+  color:white;
+  margin-bottom:5px;
+}
+
+.trainer-card p{
+  color:#cbd5e1;
+  font-size:14px;
+}
+@media (max-width:768px){
+
+  .about{
+    flex-direction:column;
+    text-align:center;
+    padding:60px 20px;
   }
   
-  /* HERO */
-  .hero {
-    position: relative;
-    height: 90vh;
-    background-image: url("../assets/gym.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom right,
-      rgba(0, 0, 0, 0.85),
-      rgba(0, 0, 0, 0.6)
-    );
+  .about-text h2{
+    font-size:2rem;
   }
   
-  .hero-content {
-    position: relative;
-    text-align: center;
-    max-width: 800px;
-    padding: 20px;
-    z-index: 2;
+  .about-image img{
+    max-width:250px;
+    margin-top:20px;
   }
   
-  .hero-content h1 {
-    font-size: 3.2rem;
-    font-weight: 700;
+  }
+ /* CONTACT SECTION */
+
+.contact{
+  padding:80px 20px;
+  background:#020617;
+  text-align:center;
+}
+
+.contact h2{
+  font-size:2.5rem;
+  color:#22c55e;
+  margin-bottom:40px;
+}
+
+/* FORM CARD */
+
+.contact-form{
+  max-width:420px;
+  margin:auto;
+  background:#0f172a;
+  padding:35px;
+  border-radius:16px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.6);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+/* INPUTS */
+
+.contact-form input,
+.contact-form textarea{
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #1f2937;
+  background:#020617;
+  color:white;
+  font-size:15px;
+  outline:none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+  border-color:#22c55e;
+}
+
+/* TEXTAREA */
+
+.contact-form textarea{
+  height:120px;
+  resize:none;
+}
+
+/* BUTTON */
+
+.contact-form button{
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  color:black;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.contact-form button:hover{
+  background:#16a34a;
+  transform:scale(1.05);
+}
+/* WHATSAPP FLOAT BUTTON */
+
+.whatsapp-btn{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  width:60px;
+  height:60px;
+  background:#25D366;
+  color:white;
+  font-size:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  text-decoration:none;
+  box-shadow:0 8px 20px rgba(0,0,0,0.5);
+  transition:0.3s;
+}
+
+.whatsapp-btn:hover{
+  transform:scale(1.1);
+}
+.gallery{
+  padding:60px 20px;
+  background:#0f172a;
+  text-align:center;
+  color:white;
   }
   
-  .hero-content h1 span {
-    color: #22c55e;
+  .gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  max-width:1100px;
+  margin:auto;
   }
   
-  .hero-content p {
-    margin: 20px 0;
-    font-size: 1.1rem;
-    color: #d1d5db;
+  .gallery-grid img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:10px;
+  transition:0.3s;
   }
   
-  .hero-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 30px;
+  .gallery-grid img:hover{
+  transform:scale(1.05);
   }
   
-  .btn {
-    padding: 14px 36px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
+  .trainers{
+  padding:60px 20px;
+  background:#020617;
+  text-align:center;
+  color:white;
   }
   
-  .btn.primary {
-    background: #22c55e;
-    color: #000;
+  .trainer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  max-width:1000px;
+  margin:auto;
   }
   
-  .btn.primary:hover {
-    background: #16a34a;
+  .trainer-card{
+  background:#0f172a;
+  padding:20px;
+  border-radius:12px;
   }
   
-  .btn.secondary {
-    border: 2px solid #22c55e;
-    color: #22c55e;
+  .trainer-card img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-bottom:10px;
   }
-  
-  .btn.secondary:hover {
-    background: #22c55e;
-    color: #000;
-  }
-  
-  /* FEATURES */
-  .features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 60px 10%;
-    background: #020617;
-  }
-  
-  .feature-card {
-    background: #020617;
-    border: 1px solid #1f2933;
-    border-radius: 16px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  }
-  
-  .feature-card h3 {
-    margin: 15px 0 10px;
-    color: #22c55e;
-  }
-  
-  .feature-card p {
-    color: #cbd5e1;
-    font-size: 0.95rem;
-  }
-  
-  /* MOBILE */
-  @media (max-width: 768px) {
-    .hero-content h1 {
-      font-size: 2.2rem;
-    }
-  
-    .hero-buttons {
-      flex-direction: column;
-    }
-  }
+  /* COMMON SECTION BACKGROUND */
+
+.features,
+.gallery,
+.trainers,
+.contact{
+  padding:70px 20px;
+  text-align:center;
+  color:white;
+
+  background-image:
+  linear-gradient(rgba(0,0,0,0.80), rgba(0,0,0,0.90)),
+  url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48");
+
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+.feature-card{
+  background: rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:30px;
+  border-radius:15px;
+  backdrop-filter: blur(6px);
+  transition:0.3s;
+}
+
+.feature-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+
+.feature-card h3{
+  color:#22c55e;
+}
+.trainer-card{
+  background:rgba(0,0,0,0.6);
+  padding:20px;
+  border-radius:15px;
+  backdrop-filter:blur(6px);
+  transition:0.3s;
+}
+
+.trainer-card:hover{
+  transform:scale(1.05);
+}
+.gallery-grid img{
+  border-radius:12px;
+  transition:0.3s;
+}
+
+.gallery-grid img:hover{
+  transform:scale(1.08);
+}

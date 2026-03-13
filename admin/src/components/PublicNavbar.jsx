@@ -1,18 +1,54 @@
-import { Link } from "react-router-dom";
-import "./navbar.css";
+import { useState } from "react";
+import "./PublicNavbar.css";
 
 const PublicNavbar = () => {
-  return (
-    <nav className="navbar">
-      <h2 className="logo">🏋️ GymPro</h2>
 
-      <div className="links">
-        <Link to="/">Home</Link>
-        {/* <Link to="/login">Login</Link>
-        <Link to="/signup" className="btn-nav">Join Now</Link> */}
-      </div>
-    </nav>
-  );
+const [menuOpen,setMenuOpen] = useState(false);
+
+return ( <nav className="navbar">
+
+  <h1 className="logo">
+    <i className="fa-solid fa-dumbbell"></i> FitZon
+  </h1>
+
+  {/* HAMBURGER ICON */}
+
+  <div
+    className="menu-icon"
+    onClick={()=>setMenuOpen(!menuOpen)}
+  >
+    <i className="fa-solid fa-bars"></i>
+  </div>
+
+  {/* NAV LINKS */}
+
+  <div className={menuOpen ? "links active" : "links"}>
+
+    <a href="#home">
+      <i className="fa-solid fa-house"></i> Home
+    </a>
+
+    <a href="#features">
+      <i className="fa-solid fa-fire"></i> Features
+    </a>
+
+    <a href="#gallery">
+      <i className="fa-solid fa-image"></i> Gallery
+    </a>
+
+    <a href="#trainers">
+      <i className="fa-solid fa-user"></i> Trainers
+    </a>
+
+    <a href="#contact">
+      <i className="fa-solid fa-phone"></i> Contact
+    </a>
+
+  </div>
+
+</nav>
+
+);
 };
 
 export default PublicNavbar;

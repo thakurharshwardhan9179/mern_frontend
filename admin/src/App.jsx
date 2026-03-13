@@ -16,6 +16,8 @@ import Announcements from "./pages/member/Announcements";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import MemberDashboard from "./pages/member/Dashboard";
 import MemberProfile from "./pages/admin/MemberProfile";
+import ContactMessages from "./pages/admin/ContactMessages";
+
 
 const Layout = () => {
   const location = useLocation();
@@ -94,6 +96,8 @@ const Layout = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/admin/messages" element={<ContactMessages />} />
+
       </Routes>
     </>
   );

@@ -305,3 +305,47 @@
     cursor:pointer;
     font-weight:bold;
     }
+    /* HEALTH CARD */
+
+.health-card{
+  background:#111827;
+  padding:25px;
+  border-radius:12px;
+  margin-top:20px;
+  color:white;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+  }
+  
+  .health-card h3{
+  margin-bottom:20px;
+  }
+  
+  .health-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
+  margin-bottom:20px;
+  }
+  
+  .health-item{
+  background:#1f2937;
+  padding:15px;
+  border-radius:8px;
+  text-align:center;
+  }
+  
+  .health-item span{
+  font-size:13px;
+  color:#9ca3af;
+  }
+  
+  .health-item h4{
+  margin-top:5px;
+  font-size:20px;
+  color:#22c55e;
+  }
+  
+  .health-extra p{
+  margin:6px 0;
+  font-size:14px;
+  }

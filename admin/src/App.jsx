@@ -12,11 +12,15 @@ import AddMember from "./pages/admin/AddMember";
 import Members from "./pages/admin/Members";
 import Announcement from "./pages/admin/Announcement";
 
-import Announcements from "./pages/member/Announcements";
+
 import ProtectedRoute from "./auth/ProtectedRoute";
 import MemberDashboard from "./pages/member/Dashboard";
+import Announcements from "./pages/member/Announcements";
 import MemberProfile from "./pages/admin/MemberProfile";
 import ContactMessages from "./pages/admin/ContactMessages";
+import AdminAttendance from "./pages/admin/AdminAttendance";
+import Progress from "./pages/member/Progress";
+import AdminProgress from "./pages/admin/AdminProgress";
 
 
 const Layout = () => {
@@ -97,7 +101,9 @@ const Layout = () => {
           }
         />
         <Route path="/admin/messages" element={<ContactMessages />} />
-
+        <Route path="/admin/attendance" element={<AdminAttendance />} />
+        <Route path="/member/progress" element={<Progress />} />
+        <Route path="/admin/progress" element={<AdminProgress />} />
       </Routes>
     </>
   );

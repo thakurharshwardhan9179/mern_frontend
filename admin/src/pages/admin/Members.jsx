@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../../api/axios";
+import "./Members.css";
 
 const Members = () => {
   const [members, setMembers] = useState([]);
@@ -64,21 +65,23 @@ const Members = () => {
   });
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Members</h2>
+    <div className="members-page">
+      <div className="members-header">
+        <h2 className="members-title">Members</h2>
+      </div>
 
-      <div style={toolbar}>
+      <div className="members-toolbar">
         <input
+          className="members-search"
           placeholder="Search member"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={searchInput}
         />
 
         <select
+          className="members-filter"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          style={select}
         >
           <option value="all">All Members</option>
           <option value="active">Active</option>
@@ -86,55 +89,60 @@ const Members = () => {
         </select>
       </div>
 
-      {loading && <p>Loading...</p>}
+      {loading && <p className="members-loading">Loading...</p>}
 
       {!loading && filteredMembers.length === 0 && (
-        <div style={emptyBox}>
+        <div className="members-empty">
           <h3>No Members Found</h3>
         </div>
       )}
 
-      <div style={grid}>
+      <div className="members-grid">
         {filteredMembers.map((m) => {
           const expired = new Date(m.expiryDate) < new Date();
 
           return (
-            <div key={m._id} style={card}>
-              
-              {/* CLICKABLE NAME */}
-              <h3>
+            <div key={m._id} className="member-card">
+              <h3 className="member-name">
                 <Link to={`/admin/member/${m._id}`}>
                   {m.userId?.name || "N/A"}
                 </Link>
               </h3>
 
-              <p>Email: {m.userId?.email}</p>
-              <p>Phone: {m.phone}</p>
-              <p>Plan: {m.plan}</p>
-
-              <p>
-                Expiry: {new Date(m.expiryDate).toLocaleDateString()}
-              </p>
+              <div className="member-details">
+                <p>
+                  <span>Email:</span> {m.userId?.email || "N/A"}
+                </p>
+                <p>
+                  <span>Phone:</span> {m.phone || "N/A"}
+                </p>
+                <p>
+                  <span>Plan:</span> {m.plan || "N/A"}
+                </p>
+                <p>
+                  <span>Expiry:</span>{" "}
+                  {new Date(m.expiryDate).toLocaleDateString()}
+                </p>
+              </div>
 
               <p
-                style={{
-                  color: expired ? "#dc2626" : "#16a34a",
-                  fontWeight: "bold",
-                }}
+                className={`member-status ${
+                  expired ? "status-expired" : "status-active"
+                }`}
               >
                 {expired ? "Expired" : "Active"}
               </p>
 
-              <div style={btnRow}>
+              <div className="member-btn-row">
                 <button
-                  style={renewBtn}
+                  className="renew-btn"
                   onClick={() => renewMember(m._id)}
                 >
                   Renew
                 </button>
 
                 <button
-                  style={deleteBtn}
+                  className="delete-btn"
                   onClick={() => deleteMember(m._id)}
                 >
                   Delete
@@ -146,85 +154,13 @@ const Members = () => {
       </div>
 
       <button
-        style={floatingBtn}
-        onClick={() => window.location.href="/admin/add-member"}
+        className="add-member-btn"
+        onClick={() => (window.location.href = "/admin/add-member")}
       >
         + Add Member
       </button>
     </div>
   );
-};
-
-/* styles */
-
-const toolbar = {
-  display: "flex",
-  gap: 10,
-  marginBottom: 20,
-};
-
-const searchInput = {
-  padding: 10,
-  width: 250,
-};
-
-const select = {
-  padding: 10,
-};
-
-const grid = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-  gap: 20,
-};
-
-const card = {
-  padding: 15,
-  borderRadius: 12,
-  background: "#f8fafc",
-  boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
-};
-
-const btnRow = {
-  marginTop: 10,
-  display: "flex",
-  gap: 10,
-};
-
-const renewBtn = {
-  padding: "6px 12px",
-  background: "#2563eb",
-  color: "#fff",
-  border: "none",
-  borderRadius: 6,
-  cursor: "pointer",
-};
-
-const deleteBtn = {
-  padding: "6px 12px",
-  background: "#dc2626",
-  color: "#fff",
-  border: "none",
-  borderRadius: 6,
-  cursor: "pointer",
-};
-
-const emptyBox = {
-  marginTop: 50,
-  textAlign: "center",
-};
-
-const floatingBtn = {
-  position: "fixed",
-  bottom: 30,
-  right: 30,
-  padding: "14px 20px",
-  borderRadius: "50px",
-  background: "#0f766e",
-  color: "#fff",
-  border: "none",
-  fontSize: 16,
-  cursor: "pointer",
 };
 
 export default Members;

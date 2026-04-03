@@ -48,7 +48,6 @@ try{
 
 return ( <div className="home">
 
-```
   {/* HERO SECTION */}
   <section
     id="home"

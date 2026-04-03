@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../../api/axios";
+import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -20,41 +21,26 @@ const AdminDashboard = () => {
     fetchStats();
   }, []);
 
-  if (loading) return <p style={{ padding: 20 }}>Loading dashboard...</p>;
+  if (loading) return <p className="admin-dashboard-loading">Loading dashboard...</p>;
 
   return (
-    <div style={{ padding: 25 }}>
-      <h2>Admin Dashboard</h2>
+    <div className="admin-dashboard-page">
+      <h2 className="admin-dashboard-heading">Admin Dashboard</h2>
 
-      <div style={grid}>
-        <Card title="Total Members" value={stats.total} color="#2563eb" />
-        <Card title="Active Members" value={stats.active} color="#16a34a" />
-        <Card title="Expired Members" value={stats.expired} color="#dc2626" />
+      <div className="admin-dashboard-grid">
+        <Card title="Total Members" value={stats.total} variant="blue" />
+        <Card title="Active Members" value={stats.active} variant="green" />
+        <Card title="Expired Members" value={stats.expired} variant="red" />
       </div>
     </div>
   );
 };
 
-const Card = ({ title, value, color }) => (
-  <div
-    style={{
-      padding: 20,
-      borderRadius: 12,
-      background: "#fff",
-      borderLeft: `6px solid ${color}`,
-      boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
-    }}
-  >
-    <h3 style={{ marginBottom: 10 }}>{title}</h3>
-    <h1 style={{ color }}>{value}</h1>
+const Card = ({ title, value, variant }) => (
+  <div className={`admin-stat-card ${variant}`}>
+    <h3>{title}</h3>
+    <h1>{value}</h1>
   </div>
 );
-
-const grid = {
-  marginTop: 20,
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-  gap: 20,
-};
 
 export default AdminDashboard;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../../api/axios";
+import "./AddMember.css";
 
 const AddMember = () => {
   const [users, setUsers] = useState([]);
@@ -16,12 +17,11 @@ const AddMember = () => {
     goal: "Fitness",
   });
 
-  // ================= GET USERS =================
   const fetchUsers = async () => {
     try {
       const res = await API.get("/auth/all");
       setUsers(res.data);
-    } catch (err) {
+    } catch {
       alert("Failed to load users");
     }
   };
@@ -30,12 +30,10 @@ const AddMember = () => {
     fetchUsers();
   }, []);
 
-  // ================= HANDLE CHANGE =================
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ================= SUBMIT =================
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,7 +44,6 @@ const AddMember = () => {
     try {
       setLoading(true);
 
-      // ⭐ IMPORTANT FIX
       const payload = {
         ...form,
         age: form.age ? Number(form.age) : undefined,
@@ -78,20 +75,14 @@ const AddMember = () => {
   };
 
   return (
-    <div style={page}>
-      <div style={card}>
-        <h2 style={heading}>Add New Member</h2>
+    <div className="add-member-page">
+      <div className="add-member-card">
+        <h2 className="add-member-heading">Add New Member</h2>
 
         <form onSubmit={handleSubmit}>
-          <div style={field}>
-            <label style={label}>Select User</label>
-            <select
-              name="userId"
-              value={form.userId}
-              onChange={handleChange}
-              required
-              style={input}
-            >
+          <div className="field">
+            <label>Select User</label>
+            <select name="userId" value={form.userId} onChange={handleChange} required>
               <option value="">-- Select User --</option>
               {users.map((u) => (
                 <option key={u._id} value={u._id}>
@@ -101,34 +92,28 @@ const AddMember = () => {
             </select>
           </div>
 
-          <div style={field}>
-            <label style={label}>Phone</label>
+          <div className="field">
+            <label>Phone</label>
             <input
               name="phone"
               value={form.phone}
               onChange={handleChange}
               placeholder="Enter phone number"
               required
-              style={input}
             />
           </div>
 
-          <div style={field}>
-            <label style={label}>Plan</label>
-            <select
-              name="plan"
-              value={form.plan}
-              onChange={handleChange}
-              style={input}
-            >
+          <div className="field">
+            <label>Plan</label>
+            <select name="plan" value={form.plan} onChange={handleChange}>
               <option>1 Month</option>
               <option>3 Month</option>
               <option>6 Month</option>
             </select>
           </div>
 
-          <div style={field}>
-            <label style={label}>Fees (₹)</label>
+          <div className="field">
+            <label>Fees (₹)</label>
             <input
               type="number"
               name="fees"
@@ -136,125 +121,40 @@ const AddMember = () => {
               onChange={handleChange}
               placeholder="Enter fees"
               required
-              style={input}
             />
           </div>
 
-          <div style={field}>
-            <label style={label}>Age</label>
-            <input
-              type="number"
-              name="age"
-              value={form.age}
-              onChange={handleChange}
-              style={input}
-            />
+          <div className="field">
+            <label>Age</label>
+            <input type="number" name="age" value={form.age} onChange={handleChange} />
           </div>
 
-          <div style={field}>
-            <label style={label}>Height (cm)</label>
-            <input
-              type="number"
-              name="height"
-              value={form.height}
-              onChange={handleChange}
-              style={input}
-            />
+          <div className="field">
+            <label>Height (cm)</label>
+            <input type="number" name="height" value={form.height} onChange={handleChange} />
           </div>
 
-          <div style={field}>
-            <label style={label}>Weight (kg)</label>
-            <input
-              type="number"
-              name="weight"
-              value={form.weight}
-              onChange={handleChange}
-              style={input}
-            />
+          <div className="field">
+            <label>Weight (kg)</label>
+            <input type="number" name="weight" value={form.weight} onChange={handleChange} />
           </div>
 
-          <div style={field}>
-            <label style={label}>Fitness Goal</label>
-            <select
-              name="goal"
-              value={form.goal}
-              onChange={handleChange}
-              style={input}
-            >
+          <div className="field">
+            <label>Fitness Goal</label>
+            <select name="goal" value={form.goal} onChange={handleChange}>
               <option>Weight Loss</option>
               <option>Muscle Gain</option>
               <option>Fitness</option>
             </select>
           </div>
 
-          <button style={button} disabled={loading}>
+          <button className="submit-btn" disabled={loading}>
             {loading ? "Adding..." : "+ Add Member"}
           </button>
         </form>
       </div>
     </div>
   );
-};
-
-/* ================= STYLES ================= */
-
-const page = {
-  minHeight: "100vh",
-  background: "#f6f8fb",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "flex-start",
-  padding: "40px 20px",
-};
-
-const card = {
-  width: "100%",
-  maxWidth: "520px",
-  background: "#ffffff",
-  padding: "28px",
-  borderRadius: "16px",
-  boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
-};
-
-const heading = {
-  fontSize: "24px",
-  fontWeight: "600",
-  marginBottom: "20px",
-  color: "#0f172a",
-};
-
-const field = {
-  marginBottom: "16px",
-};
-
-const label = {
-  display: "block",
-  marginBottom: "6px",
-  fontSize: "14px",
-  fontWeight: "500",
-  color: "#334155",
-};
-
-const input = {
-  width: "100%",
-  padding: "12px 14px",
-  borderRadius: "10px",
-  border: "1px solid #cbd5e1",
-  fontSize: "14px",
-  outline: "none",
-};
-
-const button = {
-  width: "100%",
-  marginTop: "12px",
-  padding: "13px",
-  background: "#0f766e",
-  color: "#fff",
-  border: "none",
-  borderRadius: "12px",
-  fontWeight: "600",
-  fontSize: "15px",
-  cursor: "pointer",
 };
 
 export default AddMember;

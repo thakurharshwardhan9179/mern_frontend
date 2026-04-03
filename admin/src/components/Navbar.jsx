@@ -44,6 +44,8 @@ const Navbar = () => {
             <Link to="/admin" onClick={() => setMenuOpen(false)}>Dashboard</Link>
             <Link to="/admin/add-member" onClick={() => setMenuOpen(false)}>Add Member</Link>
             <Link to="/admin/members" onClick={() => setMenuOpen(false)}>Members</Link>
+            <Link to="/admin/attendance">Attendance</Link>
+            <Link to="/admin/progress">Members Progress</Link>
             <Link to="/admin/announcement" onClick={() => setMenuOpen(false)}>Announcement</Link>
             <button onClick={handleLogout}>Logout</button>
           </>
@@ -53,6 +55,7 @@ const Navbar = () => {
           <>
             <Link to="/member/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>
             <Link to="/member/announcements" onClick={() => setMenuOpen(false)}>Announcements</Link>
+            <Link to="/member/progress">My Progress</Link>
             <button onClick={handleLogout}>Logout</button>
           </>
         )}

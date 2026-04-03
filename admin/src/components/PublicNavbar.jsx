@@ -24,23 +24,23 @@ return ( <nav className="navbar">
 
   <div className={menuOpen ? "links active" : "links"}>
 
-    <a href="#home">
+    <a href="/#home">
       <i className="fa-solid fa-house"></i> Home
     </a>
 
-    <a href="#features">
+    <a href="/#features">
       <i className="fa-solid fa-fire"></i> Features
     </a>
 
-    <a href="#gallery">
+    <a href="/#gallery">
       <i className="fa-solid fa-image"></i> Gallery
     </a>
 
-    <a href="#trainers">
+    <a href="/#trainers">
       <i className="fa-solid fa-user"></i> Trainers
     </a>
 
-    <a href="#contact">
+    <a href="/#contact">
       <i className="fa-solid fa-phone"></i> Contact
     </a>
 

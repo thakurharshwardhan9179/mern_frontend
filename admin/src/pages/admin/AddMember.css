@@ -1,0 +1,100 @@
+.add-member-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    color: #fff;
+  }
+  
+  .add-member-card {
+    width: 100%;
+    max-width: 520px;
+    background: linear-gradient(180deg, rgba(20, 31, 58, 0.96), rgba(10, 18, 37, 0.98));
+    padding: 28px;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 18px 36px rgba(0,0,0,0.28);
+  }
+  
+  .add-member-heading {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  
+  .field {
+    margin-bottom: 16px;
+  }
+  
+  .field label {
+    display: block;
+    margin-bottom: 6px;
+    color: #dbeafe;
+    font-weight: 600;
+  }
+  
+  /* ================= INPUT + SELECT ================= */
+  .field input,
+  .field select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    outline: none;
+    font-size: 14px;
+  }
+  
+  /* 🔥 IMPORTANT FIX FOR DROPDOWN */
+  .field select {
+    appearance: auto;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+  }
+  
+  /* 👇 DROPDOWN OPTIONS FIX */
+  .field select option {
+    background: #ffffff;
+    color: #111827;
+  }
+  
+  /* placeholder color */
+  .field input::placeholder {
+    color: rgba(255,255,255,0.6);
+  }
+  
+  /* focus */
+  .field input:focus,
+  .field select:focus {
+    border-color: #5b8cff;
+    box-shadow: 0 0 0 3px rgba(91,140,255,0.18);
+  }
+  
+  /* ================= BUTTON ================= */
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg,#0f766e,#14b8a6);
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .submit-btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* ================= MOBILE ================= */
+  @media(max-width:768px){
+    .add-member-page{
+      padding:20px;
+    }
+  
+    .add-member-card{
+      padding:20px;
+    }
+  }
